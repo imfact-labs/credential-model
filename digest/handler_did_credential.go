@@ -354,6 +354,7 @@ func (hd *Handlers) handleHolderCredentialsInGroup(contract, holder string) (int
 	} else if len(vas) < 1 {
 		return nil, util.ErrNotFound.Errorf("credentials by contract %s, holder %s", contract, holder)
 	}
+
 	hal, err := hd.buildHolderDIDCredentialsHal(contract, holder, did, vas)
 	if err != nil {
 		return nil, err
@@ -365,19 +366,28 @@ func (hd *Handlers) buildHolderDIDCredentialsHal(
 	contract, holder, did string,
 	vas []cdigest.Hal,
 ) (cdigest.Hal, error) {
-	h, err := hd.combineURL(HandlerPathDIDHolder, "contract", contract, "holder", holder)
+	baseSelf, err := hd.combineURL(HandlerPathDIDHolder, "contract", contract, "holder", holder)
 	if err != nil {
 		return nil, err
 	}
 
-	hal := cdigest.NewBaseHal(
+	self := baseSelf
+
+	var hal cdigest.Hal
+	hal = cdigest.NewBaseHal(
 		struct {
 			DID         string        `json:"did"`
 			Credentials []cdigest.Hal `json:"credentials"`
 		}{
 			DID:         did,
 			Credentials: vas,
-		}, cdigest.NewHalLink(h, nil))
+		}, cdigest.NewHalLink(self, nil))
+
+	h, err := hd.combineURL(HandlerPathDIDService, "contract", contract)
+	if err != nil {
+		return nil, err
+	}
+	hal = hal.AddLink("service", cdigest.NewHalLink(h, nil))
 
 	return hal, nil
 }

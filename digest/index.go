@@ -27,6 +27,15 @@ var didCredentialIndexModels = []mongo.IndexModel{
 		Options: options.Index().
 			SetName(cdigest.IndexPrefix + "credential_id_contract_template_height"),
 	},
+	{
+		Keys: bson.D{
+			bson.E{Key: "contract", Value: 1},
+			bson.E{Key: "d.value.credential.holder", Value: 1},
+			bson.E{Key: "credential_id", Value: 1},
+			bson.E{Key: "height", Value: -1}},
+		Options: options.Index().
+			SetName(cdigest.IndexPrefix + "credential_id_contract_holder_height"),
+	},
 }
 
 var didCredentialHolderIndexModels = []mongo.IndexModel{

@@ -2,64 +2,50 @@ package digest
 
 import (
 	"github.com/ProtoconNet/mitum-credential/state"
+	currencydigest "github.com/ProtoconNet/mitum-currency/v3/digest"
 	"github.com/ProtoconNet/mitum2/base"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-func (bs *BlockSession) prepareDIDCredential() error {
-	if len(bs.sts) < 1 {
-		return nil
-	}
+func PrepareDIDCredential(bs *currencydigest.BlockSession, st base.State) (string, []mongo.WriteModel, error) {
 
-	var didModels []mongo.WriteModel
-	var didCredentialModels []mongo.WriteModel
-	var didHolderDIDModels []mongo.WriteModel
-	var didTemplateModels []mongo.WriteModel
-
-	for i := range bs.sts {
-		st := bs.sts[i]
-		switch {
-		case state.IsStateDesignKey(st.Key()):
-			j, err := bs.handleDIDCredentialDesignState(st)
-			if err != nil {
-				return err
-			}
-			didModels = append(didModels, j...)
-		case state.IsStateCredentialKey(st.Key()):
-			j, err := bs.handleCredentialState(st)
-			if err != nil {
-				return err
-			}
-			bs.credentialMap[st.Key()] = struct{}{}
-			didCredentialModels = append(didCredentialModels, j...)
-
-		case state.IsStateHolderDIDKey(st.Key()):
-			j, err := bs.handleHolderDIDState(st)
-			if err != nil {
-				return err
-			}
-			didHolderDIDModels = append(didHolderDIDModels, j...)
-		case state.IsStateTemplateKey(st.Key()):
-			j, err := bs.handleTemplateState(st)
-			if err != nil {
-				return err
-			}
-			didTemplateModels = append(didTemplateModels, j...)
-		default:
-			continue
+	switch {
+	case state.IsStateDesignKey(st.Key()):
+		j, err := handleDIDCredentialDesignState(bs, st)
+		if err != nil {
+			return "", nil, err
 		}
+
+		return DefaultColNameDIDCredentialService, j, nil
+	case state.IsStateCredentialKey(st.Key()):
+		j, err := handleCredentialState(bs, st)
+		if err != nil {
+			return "", nil, err
+		}
+
+		return DefaultColNameDIDCredential, j, nil
+
+	case state.IsStateHolderDIDKey(st.Key()):
+		j, err := handleHolderDIDState(bs, st)
+		if err != nil {
+			return "", nil, err
+		}
+
+		return DefaultColNameHolder, j, nil
+	case state.IsStateTemplateKey(st.Key()):
+		j, err := handleTemplateState(bs, st)
+		if err != nil {
+			return "", nil, err
+		}
+
+		return DefaultColNameTemplate, j, nil
 	}
 
-	bs.didIssuerModels = didModels
-	bs.didCredentialModels = didCredentialModels
-	bs.didHolderDIDModels = didHolderDIDModels
-	bs.didTemplateModels = didTemplateModels
-
-	return nil
+	return "", nil, nil
 }
 
-func (bs *BlockSession) handleDIDCredentialDesignState(st base.State) ([]mongo.WriteModel, error) {
-	if issuerDoc, err := NewDIDCredentialDesignDoc(st, bs.st.Encoder()); err != nil {
+func handleDIDCredentialDesignState(bs *currencydigest.BlockSession, st base.State) ([]mongo.WriteModel, error) {
+	if issuerDoc, err := NewDIDCredentialDesignDoc(st, bs.Database().Encoder()); err != nil {
 		return nil, err
 	} else {
 		return []mongo.WriteModel{
@@ -68,8 +54,8 @@ func (bs *BlockSession) handleDIDCredentialDesignState(st base.State) ([]mongo.W
 	}
 }
 
-func (bs *BlockSession) handleCredentialState(st base.State) ([]mongo.WriteModel, error) {
-	if credentialDoc, err := NewCredentialDoc(st, bs.st.Encoder()); err != nil {
+func handleCredentialState(bs *currencydigest.BlockSession, st base.State) ([]mongo.WriteModel, error) {
+	if credentialDoc, err := NewCredentialDoc(st, bs.Database().Encoder()); err != nil {
 		return nil, err
 	} else {
 		return []mongo.WriteModel{
@@ -78,8 +64,8 @@ func (bs *BlockSession) handleCredentialState(st base.State) ([]mongo.WriteModel
 	}
 }
 
-func (bs *BlockSession) handleHolderDIDState(st base.State) ([]mongo.WriteModel, error) {
-	if holderDidDoc, err := NewHolderDIDDoc(st, bs.st.Encoder()); err != nil {
+func handleHolderDIDState(bs *currencydigest.BlockSession, st base.State) ([]mongo.WriteModel, error) {
+	if holderDidDoc, err := NewHolderDIDDoc(st, bs.Database().Encoder()); err != nil {
 		return nil, err
 	} else {
 		return []mongo.WriteModel{
@@ -88,8 +74,8 @@ func (bs *BlockSession) handleHolderDIDState(st base.State) ([]mongo.WriteModel,
 	}
 }
 
-func (bs *BlockSession) handleTemplateState(st base.State) ([]mongo.WriteModel, error) {
-	if templateDoc, err := NewTemplateDoc(st, bs.st.Encoder()); err != nil {
+func handleTemplateState(bs *currencydigest.BlockSession, st base.State) ([]mongo.WriteModel, error) {
+	if templateDoc, err := NewTemplateDoc(st, bs.Database().Encoder()); err != nil {
 		return nil, err
 	} else {
 		return []mongo.WriteModel{

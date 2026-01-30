@@ -2,6 +2,7 @@ package digest
 
 import (
 	"context"
+
 	"github.com/ProtoconNet/mitum-credential/state"
 	"github.com/ProtoconNet/mitum-credential/types"
 	cdigest "github.com/ProtoconNet/mitum-currency/v3/digest"
@@ -154,32 +155,49 @@ func CredentialsByServiceTemplate(
 	limit int64,
 	callback func(types.Credential, bool, base.State) (bool, error),
 ) error {
-	filter, err := buildCredentialFilterByServiceTemplate(contract, templateID, offset, reverse)
-	if err != nil {
-		return err
-	}
-
-	sr := 1
+	sortDir := 1
+	cmpOp := "$gt"
 	if reverse {
-		sr = -1
+		sortDir = -1
+		cmpOp = "$lt"
 	}
 
-	opt := options.Find().SetSort(
-		util.NewBSONFilter("height", sr).D(),
-	)
-
-	switch {
-	case limit <= 0: // no limit
-	case limit > maxLimit:
-		opt = opt.SetLimit(maxLimit)
-	default:
-		opt = opt.SetLimit(limit)
+	match := bson.D{
+		{Key: "contract", Value: contract},
+		{Key: "template", Value: templateID},
 	}
 
-	return st.MongoClient().Find(
+	if offset != "" {
+		match = append(match, bson.E{
+			Key:   "credential_id",
+			Value: bson.D{{Key: cmpOp, Value: offset}},
+		})
+	}
+
+	pipeline := mongo.Pipeline{
+		bson.D{{Key: "$match", Value: match}},
+		bson.D{{Key: "$sort", Value: bson.D{
+			{Key: "credential_id", Value: sortDir},
+			{Key: "height", Value: -1},
+			{Key: "_id", Value: -1},
+		}}},
+		bson.D{{Key: "$group", Value: bson.D{
+			{Key: "_id", Value: "$credential_id"},
+			{Key: "doc", Value: bson.D{{Key: "$first", Value: "$$ROOT"}}},
+		}}},
+		bson.D{{Key: "$replaceRoot", Value: bson.D{
+			{Key: "newRoot", Value: "$doc"},
+		}}},
+	}
+
+	if limit > 0 {
+		pipeline = append(pipeline, bson.D{{Key: "$limit", Value: limit}})
+	}
+
+	return st.MongoClient().Aggregate(
 		context.Background(),
 		DefaultColNameDIDCredential,
-		filter,
+		pipeline,
 		func(cursor *mongo.Cursor) (bool, error) {
 			st, err := cdigest.LoadState(cursor.Decode, st.Encoders())
 			if err != nil {
@@ -191,42 +209,7 @@ func CredentialsByServiceTemplate(
 			}
 			return callback(credential, isActive, st)
 		},
-		opt,
 	)
-}
-
-func buildCredentialFilterByServiceTemplate(contract, templateID string, offset string, reverse bool) (bson.D, error) {
-	filterA := bson.A{}
-
-	// filter for matching template
-	filterContract := bson.D{{"contract", bson.D{{"$in", []string{contract}}}}}
-	filterTemplate := bson.D{{"template", bson.D{{"$in", []string{templateID}}}}}
-	filterA = append(filterA, filterContract)
-	filterA = append(filterA, filterTemplate)
-
-	// if offset exist, apply offset
-	if len(offset) > 0 {
-		if !reverse {
-			filterOffset := bson.D{
-				{"credential_id", bson.D{{"$gt", offset}}},
-			}
-			filterA = append(filterA, filterOffset)
-		} else {
-			filterHeight := bson.D{
-				{"credential_id", bson.D{{"$lt", offset}}},
-			}
-			filterA = append(filterA, filterHeight)
-		}
-	}
-
-	filter := bson.D{}
-	if len(filterA) > 0 {
-		filter = bson.D{
-			{"$and", filterA},
-		}
-	}
-
-	return filter, nil
 }
 
 func CredentialsByServiceHolder(
@@ -234,21 +217,35 @@ func CredentialsByServiceHolder(
 	contract, holder string,
 	callback func(types.Credential, bool, base.State) (bool, error),
 ) error {
-	filter, err := buildCredentialFilterByServiceHolder(contract, holder)
-	if err != nil {
-		return err
+	match := bson.D{
+		{Key: "contract", Value: contract},
+		{Key: "d.value.credential.holder", Value: holder},
 	}
 
-	opt := options.Find().SetSort(
-		util.NewBSONFilter("height", 1).D(),
-	)
+	pipeline := mongo.Pipeline{
+		bson.D{{Key: "$match", Value: match}},
+		bson.D{{Key: "$sort", Value: bson.D{
+			{Key: "credential_id", Value: 1},
+			{Key: "template", Value: 1},
+			{Key: "height", Value: -1},
+			{Key: "_id", Value: -1},
+		}}},
+		bson.D{{Key: "$group", Value: bson.D{
+			{Key: "_id", Value: bson.D{
+				{Key: "credential_id", Value: "$credential_id"},
+				{Key: "template", Value: "$template"},
+			}},
+			{Key: "doc", Value: bson.D{{Key: "$first", Value: "$$ROOT"}}},
+		}}},
+		bson.D{{Key: "$replaceRoot", Value: bson.D{
+			{Key: "newRoot", Value: "$doc"},
+		}}},
+	}
 
-	opt = opt.SetLimit(1000)
-
-	return st.MongoClient().Find(
+	return st.MongoClient().Aggregate(
 		context.Background(),
 		DefaultColNameDIDCredential,
-		filter,
+		pipeline,
 		func(cursor *mongo.Cursor) (bool, error) {
 			st, err := cdigest.LoadState(cursor.Decode, st.Encoders())
 			if err != nil {
@@ -260,7 +257,6 @@ func CredentialsByServiceHolder(
 			}
 			return callback(credential, isActive, st)
 		},
-		opt,
 	)
 }
 
