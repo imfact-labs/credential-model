@@ -241,6 +241,10 @@ func (fact AddTemplateFact) FeePayer() base.Address {
 	return fact.sender
 }
 
+func (fact AddTemplateFact) FeeItemCount() (uint, bool) {
+	return extras.ZeroItem, extras.HasNoItem
+}
+
 func (fact AddTemplateFact) FactUser() base.Address {
 	return fact.sender
 }
