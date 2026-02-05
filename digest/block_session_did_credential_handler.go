@@ -4,11 +4,10 @@ import (
 	"github.com/ProtoconNet/mitum-credential/state"
 	currencydigest "github.com/ProtoconNet/mitum-currency/v3/digest"
 	"github.com/ProtoconNet/mitum2/base"
-	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/v2/mongo"
 )
 
 func PrepareDIDCredential(bs *currencydigest.BlockSession, st base.State) (string, []mongo.WriteModel, error) {
-
 	switch {
 	case state.IsStateDesignKey(st.Key()):
 		j, err := handleDIDCredentialDesignState(bs, st)
