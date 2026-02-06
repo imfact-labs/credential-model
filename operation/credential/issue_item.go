@@ -1,10 +1,10 @@
 package credential
 
 import (
-	"github.com/ProtoconNet/mitum-currency/v3/common"
 	"unicode/utf8"
 
 	"github.com/ProtoconNet/mitum-credential/types"
+	"github.com/ProtoconNet/mitum-currency/v3/common"
 	ctypes "github.com/ProtoconNet/mitum-currency/v3/types"
 	"github.com/ProtoconNet/mitum2/base"
 	"github.com/ProtoconNet/mitum2/util"

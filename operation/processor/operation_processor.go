@@ -2,6 +2,7 @@ package processor
 
 import (
 	"fmt"
+
 	"github.com/ProtoconNet/mitum-credential/operation/credential"
 	"github.com/ProtoconNet/mitum-currency/v3/operation/currency"
 	"github.com/ProtoconNet/mitum-currency/v3/operation/extension"

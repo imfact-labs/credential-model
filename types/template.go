@@ -1,13 +1,14 @@
 package types
 
 import (
+	"unicode/utf8"
+
 	"github.com/ProtoconNet/mitum-currency/v3/common"
 	ctypes "github.com/ProtoconNet/mitum-currency/v3/types"
 	"github.com/ProtoconNet/mitum2/base"
 	"github.com/ProtoconNet/mitum2/util"
 	"github.com/ProtoconNet/mitum2/util/hint"
 	"github.com/pkg/errors"
-	"unicode/utf8"
 )
 
 var TemplateHint = hint.MustNewHint("mitum-credential-template-v0.0.1")

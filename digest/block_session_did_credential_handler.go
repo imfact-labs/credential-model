@@ -2,12 +2,12 @@ package digest
 
 import (
 	"github.com/ProtoconNet/mitum-credential/state"
-	currencydigest "github.com/ProtoconNet/mitum-currency/v3/digest"
+	cdigest "github.com/ProtoconNet/mitum-currency/v3/digest"
 	"github.com/ProtoconNet/mitum2/base"
 	"go.mongodb.org/mongo-driver/v2/mongo"
 )
 
-func PrepareDIDCredential(bs *currencydigest.BlockSession, st base.State) (string, []mongo.WriteModel, error) {
+func PrepareDIDCredential(bs *cdigest.BlockSession, st base.State) (string, []mongo.WriteModel, error) {
 	switch {
 	case state.IsStateDesignKey(st.Key()):
 		j, err := handleDIDCredentialDesignState(bs, st)
@@ -43,7 +43,7 @@ func PrepareDIDCredential(bs *currencydigest.BlockSession, st base.State) (strin
 	return "", nil, nil
 }
 
-func handleDIDCredentialDesignState(bs *currencydigest.BlockSession, st base.State) ([]mongo.WriteModel, error) {
+func handleDIDCredentialDesignState(bs *cdigest.BlockSession, st base.State) ([]mongo.WriteModel, error) {
 	if issuerDoc, err := NewDIDCredentialDesignDoc(st, bs.Database().Encoder()); err != nil {
 		return nil, err
 	} else {
@@ -53,7 +53,7 @@ func handleDIDCredentialDesignState(bs *currencydigest.BlockSession, st base.Sta
 	}
 }
 
-func handleCredentialState(bs *currencydigest.BlockSession, st base.State) ([]mongo.WriteModel, error) {
+func handleCredentialState(bs *cdigest.BlockSession, st base.State) ([]mongo.WriteModel, error) {
 	if credentialDoc, err := NewCredentialDoc(st, bs.Database().Encoder()); err != nil {
 		return nil, err
 	} else {
@@ -63,7 +63,7 @@ func handleCredentialState(bs *currencydigest.BlockSession, st base.State) ([]mo
 	}
 }
 
-func handleHolderDIDState(bs *currencydigest.BlockSession, st base.State) ([]mongo.WriteModel, error) {
+func handleHolderDIDState(bs *cdigest.BlockSession, st base.State) ([]mongo.WriteModel, error) {
 	if holderDidDoc, err := NewHolderDIDDoc(st, bs.Database().Encoder()); err != nil {
 		return nil, err
 	} else {
@@ -73,7 +73,7 @@ func handleHolderDIDState(bs *currencydigest.BlockSession, st base.State) ([]mon
 	}
 }
 
-func handleTemplateState(bs *currencydigest.BlockSession, st base.State) ([]mongo.WriteModel, error) {
+func handleTemplateState(bs *cdigest.BlockSession, st base.State) ([]mongo.WriteModel, error) {
 	if templateDoc, err := NewTemplateDoc(st, bs.Database().Encoder()); err != nil {
 		return nil, err
 	} else {
