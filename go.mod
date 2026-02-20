@@ -1,20 +1,25 @@
-module github.com/ProtoconNet/mitum-credential
+module github.com/imfact-labs/credential-model
 
 go 1.24.0
 
 toolchain go1.24.9
 
 require (
-	github.com/ProtoconNet/mitum-currency/v3 v3.0.0-alpha.0.20260204010352-2052afa8ce46
-	github.com/ProtoconNet/mitum2 v0.0.0-20251029064552-48aef1088f5f
 	github.com/alecthomas/kong v1.12.1
-	github.com/arl/statsviz v0.7.1
+	github.com/imfact-labs/currency-model v0.0.6
+	github.com/imfact-labs/currency-model/api v0.0.6
+	github.com/imfact-labs/currency-model/app v0.0.6
+	github.com/imfact-labs/currency-model/digest v0.0.6
+	github.com/imfact-labs/mitum2 v0.0.0-20260219060841-f51dacce1321
 	github.com/pkg/errors v0.9.1
 	github.com/rs/zerolog v1.34.0
 	gopkg.in/yaml.v3 v3.0.1
 )
 
-require github.com/hashicorp/go-msgpack v0.5.5 // indirect
+require (
+	github.com/arl/statsviz v0.7.1 // indirect
+	github.com/hashicorp/go-msgpack v0.5.5 // indirect
+)
 
 require (
 	github.com/hashicorp/go-retryablehttp v0.7.7 // indirect
@@ -39,7 +44,6 @@ require (
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
-	github.com/montanaflynn/stats v0.7.1 // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/rainycape/memcache v0.0.0-20150622160815-1031fa0ce2f2 // indirect
 	github.com/rs/xid v1.6.0 // indirect
@@ -53,7 +57,6 @@ require (
 	github.com/xdg-go/stringprep v1.0.4 // indirect
 	github.com/youmark/pkcs8 v0.0.0-20240726163527-a2c0da244d78 // indirect
 	github.com/zeebo/blake3 v0.2.4 // indirect
-	go.mongodb.org/mongo-driver v1.17.4
 	golang.org/x/arch v0.7.0 // indirect
 	golang.org/x/crypto v0.45.0 // indirect
 	golang.org/x/exp v0.0.0-20250819193227-8b4c13bb791b
@@ -100,6 +103,9 @@ require (
 	github.com/hashicorp/go-hclog v1.6.3 // indirect
 	github.com/hashicorp/go-immutable-radix v1.3.1 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
+	github.com/imfact-labs/currency-model/api v0.0.6
+	github.com/imfact-labs/currency-model/app v0.0.6
+	github.com/imfact-labs/currency-model/digest v0.0.6
 	github.com/mr-tron/base58 v1.1.0 // indirect
 	github.com/multiformats/go-base32 v0.0.3 // indirect
 	github.com/multiformats/go-base36 v0.1.0 // indirect
@@ -108,7 +114,7 @@ require (
 	github.com/oklog/ulid/v2 v2.1.1 // indirect
 	github.com/quic-go/quic-go v0.54.1 // indirect
 	github.com/redis/go-redis/v9 v9.13.0 // indirect
-	go.mongodb.org/mongo-driver/v2 v2.5.0 // indirect
+	go.mongodb.org/mongo-driver/v2 v2.5.0
 	go.uber.org/mock v0.5.0 // indirect
 )
 

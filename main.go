@@ -5,14 +5,14 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/ProtoconNet/mitum-credential/cmds"
-	ccmds "github.com/ProtoconNet/mitum-currency/v3/cmds"
-	"github.com/ProtoconNet/mitum2/base"
-	"github.com/ProtoconNet/mitum2/launch"
-	launchcmd "github.com/ProtoconNet/mitum2/launch/cmd"
-	"github.com/ProtoconNet/mitum2/util"
-	"github.com/ProtoconNet/mitum2/util/logging"
 	"github.com/alecthomas/kong"
+	"github.com/imfact-labs/credential-model/cmds"
+	ccmds "github.com/imfact-labs/currency-model/app/cmds"
+	"github.com/imfact-labs/mitum2/base"
+	"github.com/imfact-labs/mitum2/launch"
+	launchcmd "github.com/imfact-labs/mitum2/launch/cmd"
+	"github.com/imfact-labs/mitum2/util"
+	"github.com/imfact-labs/mitum2/util/logging"
 	"github.com/pkg/errors"
 )
 

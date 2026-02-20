@@ -1,9 +1,9 @@
 package credential
 
 import (
-	ctypes "github.com/ProtoconNet/mitum-currency/v3/types"
-	"github.com/ProtoconNet/mitum2/base"
-	"github.com/ProtoconNet/mitum2/util/encoder"
+	ctypes "github.com/imfact-labs/currency-model/types"
+	"github.com/imfact-labs/mitum2/base"
+	"github.com/imfact-labs/mitum2/util/encoder"
 )
 
 func (fact *RegisterModelFact) unpack(enc encoder.Encoder, sAdr, cAdr, cid string) error {

@@ -1,23 +1,23 @@
-### mitum-credential
+### credential-model
 
-*mitum-credential* is a [mitum](https://github.com/ProtoconNet/mitum2)-based contract model and is a service that provides credentials to be issued and updated using DID.
+*credential-model* is a credential contract model based on [mitum](https://github.com/imfact-labs/mitum2).
 
 #### Installation
 
 ```sh
-$ git clone https://github.com/ProtoconNet/mitum-credential
+$ git clone https://github.com/imfact-labs/credential-model
 
-$ cd mitum-credential
+$ cd credential-model
 
-$ go build -o ./mc ./main.go
+$ go build -o ./imfact ./main.go
 ```
 
 #### Run
 
 ```sh
-$ ./mc init --design=<config file> <genesis config file>
+$ ./imfact init --design=<config file> <genesis config file>
 
-$ ./mc run --design=<config file>
+$ ./imfact run --design=<config file>
 ```
 
 [standalong.yml](standalone.yml) is a sample of `config file`.

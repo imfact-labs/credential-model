@@ -4,7 +4,7 @@ import (
 	"regexp"
 	"time"
 
-	"github.com/ProtoconNet/mitum-currency/v3/common"
+	"github.com/imfact-labs/currency-model/common"
 )
 
 var (

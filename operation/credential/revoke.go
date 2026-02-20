@@ -3,13 +3,14 @@ package credential
 import (
 	"fmt"
 
-	"github.com/ProtoconNet/mitum-currency/v3/common"
-	"github.com/ProtoconNet/mitum-currency/v3/operation/extras"
-	"github.com/ProtoconNet/mitum-currency/v3/types"
-	"github.com/ProtoconNet/mitum2/base"
-	"github.com/ProtoconNet/mitum2/util"
-	"github.com/ProtoconNet/mitum2/util/hint"
-	"github.com/ProtoconNet/mitum2/util/valuehash"
+	"github.com/imfact-labs/credential-model/operation/processor"
+	"github.com/imfact-labs/currency-model/common"
+	"github.com/imfact-labs/currency-model/operation/extras"
+	"github.com/imfact-labs/currency-model/types"
+	"github.com/imfact-labs/mitum2/base"
+	"github.com/imfact-labs/mitum2/util"
+	"github.com/imfact-labs/mitum2/util/hint"
+	"github.com/imfact-labs/mitum2/util/valuehash"
 	"github.com/pkg/errors"
 )
 
@@ -170,6 +171,20 @@ func (fact RevokeFact) ActiveContractOwnerHandlerOnly() [][2]base.Address {
 		arr = append(arr, [2]base.Address{fact.items[i].contract, fact.sender})
 	}
 	return arr
+}
+
+func (fact RevokeFact) DupKey() (map[types.DuplicationKeyType][]string, error) {
+	r := make(map[types.DuplicationKeyType][]string)
+	r[extras.DuplicationKeyTypeSender] = []string{fact.sender.String()}
+
+	for _, item := range fact.items {
+		r[processor.DuplicationTypeCredential] = append(
+			r[processor.DuplicationTypeCredential],
+			fmt.Sprintf("%s:%s:%s", item.Contract().String(), item.TemplateID(), item.CredentialID()),
+		)
+	}
+
+	return r, nil
 }
 
 type Revoke struct {

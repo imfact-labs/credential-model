@@ -3,9 +3,9 @@ package cmds
 import (
 	"context"
 
-	"github.com/ProtoconNet/mitum-credential/operation/credential"
-	ccmds "github.com/ProtoconNet/mitum-currency/v3/cmds"
-	"github.com/ProtoconNet/mitum2/base"
+	"github.com/imfact-labs/credential-model/operation/credential"
+	ccmds "github.com/imfact-labs/currency-model/app/cmds"
+	"github.com/imfact-labs/mitum2/base"
 	"github.com/pkg/errors"
 )
 

@@ -3,11 +3,11 @@ package digest
 import (
 	"context"
 
-	"github.com/ProtoconNet/mitum-credential/state"
-	"github.com/ProtoconNet/mitum-credential/types"
-	cdigest "github.com/ProtoconNet/mitum-currency/v3/digest"
-	"github.com/ProtoconNet/mitum-currency/v3/digest/util"
-	"github.com/ProtoconNet/mitum2/base"
+	"github.com/imfact-labs/credential-model/state"
+	"github.com/imfact-labs/credential-model/types"
+	cdigest "github.com/imfact-labs/currency-model/digest"
+	"github.com/imfact-labs/currency-model/digest/util"
+	"github.com/imfact-labs/mitum2/base"
 	"go.mongodb.org/mongo-driver/v2/bson"
 	"go.mongodb.org/mongo-driver/v2/mongo"
 	"go.mongodb.org/mongo-driver/v2/mongo/options"

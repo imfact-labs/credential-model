@@ -4,7 +4,7 @@ import (
 	"regexp"
 	"unicode/utf8"
 
-	"github.com/ProtoconNet/mitum-currency/v3/common"
+	"github.com/imfact-labs/currency-model/common"
 	"github.com/pkg/errors"
 )
 

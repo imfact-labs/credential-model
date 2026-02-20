@@ -1,6 +1,6 @@
 package cmds
 
-import "github.com/ProtoconNet/mitum-credential/types"
+import "github.com/imfact-labs/credential-model/types"
 
 type ServiceIDFlag struct {
 	ID types.ServiceID

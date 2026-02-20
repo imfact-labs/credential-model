@@ -1,11 +1,11 @@
 package cmds
 
 import (
-	"github.com/ProtoconNet/mitum-credential/operation/credential"
-	"github.com/ProtoconNet/mitum-credential/state"
-	"github.com/ProtoconNet/mitum-credential/types"
-	ccmds "github.com/ProtoconNet/mitum-currency/v3/cmds"
-	"github.com/ProtoconNet/mitum2/util/encoder"
+	"github.com/imfact-labs/credential-model/operation/credential"
+	"github.com/imfact-labs/credential-model/state"
+	"github.com/imfact-labs/credential-model/types"
+	ccmds "github.com/imfact-labs/currency-model/app/cmds"
+	"github.com/imfact-labs/mitum2/util/encoder"
 	"github.com/pkg/errors"
 )
 

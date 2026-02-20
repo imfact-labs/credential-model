@@ -3,10 +3,10 @@ package state
 import (
 	"fmt"
 
-	"github.com/ProtoconNet/mitum-credential/types"
-	"github.com/ProtoconNet/mitum2/base"
-	"github.com/ProtoconNet/mitum2/util"
-	"github.com/ProtoconNet/mitum2/util/hint"
+	"github.com/imfact-labs/credential-model/types"
+	"github.com/imfact-labs/mitum2/base"
+	"github.com/imfact-labs/mitum2/util"
+	"github.com/imfact-labs/mitum2/util/hint"
 	"github.com/pkg/errors"
 	"strings"
 )

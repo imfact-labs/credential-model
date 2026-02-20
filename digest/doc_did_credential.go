@@ -1,13 +1,13 @@
 package digest
 
 import (
-	"github.com/ProtoconNet/mitum-credential/state"
-	"github.com/ProtoconNet/mitum-credential/types"
-	mongodbst "github.com/ProtoconNet/mitum-currency/v3/digest/mongodb"
-	bsonenc "github.com/ProtoconNet/mitum-currency/v3/digest/util/bson"
-	cstate "github.com/ProtoconNet/mitum-currency/v3/state"
-	"github.com/ProtoconNet/mitum2/base"
-	"github.com/ProtoconNet/mitum2/util/encoder"
+	"github.com/imfact-labs/credential-model/state"
+	"github.com/imfact-labs/credential-model/types"
+	mongodbst "github.com/imfact-labs/currency-model/digest/mongodb"
+	cstate "github.com/imfact-labs/currency-model/state"
+	bsonenc "github.com/imfact-labs/currency-model/utils/bsonenc"
+	"github.com/imfact-labs/mitum2/base"
+	"github.com/imfact-labs/mitum2/util/encoder"
 )
 
 type DIDCredentialDesignDoc struct {
