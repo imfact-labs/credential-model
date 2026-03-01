@@ -34,7 +34,7 @@ func (cmd *RegisterModelCommand) Run(pctx context.Context) error { // nolint:dup
 		return err
 	}
 
-	PrettyPrint(cmd.Out, op)
+	ccmds.PrettyPrint(cmd.Out, op)
 
 	return nil
 }

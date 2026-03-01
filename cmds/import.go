@@ -8,6 +8,7 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/imfact-labs/credential-model/runtime/pipeline"
 	"github.com/imfact-labs/mitum2/base"
 	"github.com/imfact-labs/mitum2/isaac"
 	isaacblock "github.com/imfact-labs/mitum2/isaac/block"
@@ -79,7 +80,7 @@ func (cmd *ImportCommand) Run(pctx context.Context) error {
 		launch.PrivatekeyContextKey: string(cmd.PrivatekeyFlags.Flag.Body()),
 	})
 
-	pps := DefaultImportPS()
+	pps := pipeline.DefaultImportPS()
 	_ = pps.SetLogging(log)
 
 	_ = pps.AddOK(pNameImportBlocks, cmd.importBlocks, nil, launch.PNameStorage)
