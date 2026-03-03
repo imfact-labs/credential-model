@@ -187,8 +187,8 @@ github.com/hexops/gotextdiff v1.0.3/go.mod h1:pSWU5MAI3yDq+fZBTazCSJysOMbxWL1BSo
 github.com/holiman/uint256 v1.3.1 h1:JfTzmih28bittyHM8z360dCjIA9dbPIBlcTI6lmctQs=
 github.com/holiman/uint256 v1.3.1/go.mod h1:EOMSn4q6Nyt9P6efbI3bueV4e1b3dGlUCXeiRV4ng7E=
 github.com/hpcloud/tail v1.0.0/go.mod h1:ab1qPbhIpdTxEkNHXyeSf5vhxWSCs/tWer42PpOxQnU=
-github.com/imfact-labs/currency-model v0.0.0-20260227065611-4970250bf238 h1:IK5gLZPrJ693S+clKwBzt6+PTnqDMzPSM2hRVId1Aqg=
-github.com/imfact-labs/currency-model v0.0.0-20260227065611-4970250bf238/go.mod h1:HWLKpiD+bFdXowZbB4fRBbpLuz5/UZsg6w/fD6+ZmgU=
+github.com/imfact-labs/currency-model v0.0.0-20260303075407-3f4e54e31e60 h1:ByzPi7VTSeBmQGfwdCTwHkg01b9ZS+hwf2CtVDo4P7o=
+github.com/imfact-labs/currency-model v0.0.0-20260303075407-3f4e54e31e60/go.mod h1:HWLKpiD+bFdXowZbB4fRBbpLuz5/UZsg6w/fD6+ZmgU=
 github.com/imfact-labs/mitum2 v0.0.0-20260219060841-f51dacce1321 h1:U82yPkKtDNI8jFG+13McpxenqO4eb3mAHG+6YWqzYbs=
 github.com/imfact-labs/mitum2 v0.0.0-20260219060841-f51dacce1321/go.mod h1:Zt95aGE1g+8VfQpyNVHjRJeuOunifK2uPtB87o4qrFc=
 github.com/jessevdk/go-flags v0.0.0-20141203071132-1679536dcc89/go.mod h1:4FA24M0QyGHXBuZZK/XkWh8h0e1EYbRYJSGM75WSRxI=
