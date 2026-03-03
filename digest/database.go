@@ -240,6 +240,10 @@ func CredentialsByServiceHolder(
 		bson.D{{Key: "$replaceRoot", Value: bson.D{
 			{Key: "newRoot", Value: "$doc"},
 		}}},
+		{{"$sort", bson.D{
+			{"template", 1},
+			{"credential_id", 1},
+		}}},
 	}
 
 	return st.MongoClient().Aggregate(
@@ -258,23 +262,4 @@ func CredentialsByServiceHolder(
 			return callback(credential, isActive, st)
 		},
 	)
-}
-
-func buildCredentialFilterByServiceHolder(contract, holder string) (bson.D, error) {
-	filterA := bson.A{}
-
-	// filter fot matching collection
-	filterContract := bson.D{{"contract", bson.D{{"$in", []string{contract}}}}}
-	filterHolder := bson.D{{"d.value.credential.holder", holder}}
-	filterA = append(filterA, filterContract)
-	filterA = append(filterA, filterHolder)
-
-	filter := bson.D{}
-	if len(filterA) > 0 {
-		filter = bson.D{
-			{"$and", filterA},
-		}
-	}
-
-	return filter, nil
 }
